@@ -1,6 +1,6 @@
 {
   "name": "@kawkab-oss/stcpay-node",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "STC Pay direct payment implementation for Node.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
