@@ -1,10 +1,11 @@
 import axios, { AxiosInstance, AxiosPromise } from 'axios';
+import { Agent } from 'https';
 
 interface STCPayConfig {
   merchantId: number;
-  username: string;
-  password: string;
-  testing: boolean;
+  cert: string;
+  key: string;
+  testing?: boolean;
 }
 
 interface AuthorizationExtras {
@@ -13,7 +14,7 @@ interface AuthorizationExtras {
   DeviceID: string;
   RefNum: string;
   BillNumber: string;
-  MerchantNote: string;
+  MerchantNote?: string;
 }
 
 interface AuthorizationResponse {
@@ -38,7 +39,7 @@ interface ConfirmationResponse {
 
 export default class STCPay {
   private baseUrl = {
-    testing: 'https://b2btest.stcpay.com.sa/B2B.DirectPayment.WebApi/DirectPayment/V4/',
+    testing: 'https://test.b2b.stcpay.com.sa/B2B.DirectPayment.WebApi/DirectPayment/V4/',
     production: 'https://b2b.stcpay.com.sa/B2B.DirectPayment.WebApi/DirectPayment/V4/',
   };
   private axiosInstance: AxiosInstance;
@@ -49,9 +50,11 @@ export default class STCPay {
       baseURL: this.baseUrl[this.config.testing ? 'testing' : 'production'],
       headers: {
         'X-ClientCode': this.config.merchantId,
-        'X-UserName': this.config.username,
-        'X-Password': this.config.password
       },
+      httpsAgent: new Agent({
+        cert: config.cert,
+        key: config.key,
+      }),
     });
   }
 
@@ -61,7 +64,7 @@ export default class STCPay {
     });
   }
 
-  authorize(mobileNumber: string, amount: number, extras?: AuthorizationExtras): Promise<AuthorizationResponse> {
+  authorize(mobileNumber: string, amount: number, extras: AuthorizationExtras): Promise<AuthorizationResponse> {
     return this.request('DirectPaymentAuthorize', {
       DirectPaymentAuthorizeV4RequestMessage: {
         MobileNo: mobileNumber,

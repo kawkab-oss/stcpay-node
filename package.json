@@ -1,6 +1,6 @@
 {
-  "name": "stcpay-node",
-  "version": "1.0.0",
+  "name": "@kawkab-oss/stcpay-node",
+  "version": "1.1.1",
   "description": "STC Pay direct payment implementation for Node.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -28,12 +28,13 @@
   },
   "homepage": "https://github.com/kawkab-oss/stcpay-node",
   "devDependencies": {
-    "prettier": "^2.2.0",
+    "prettier": "^2.2.1",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^4.1.2"
+    "typescript": "^4.2.4"
   },
   "dependencies": {
-    "axios": "^0.21.0"
+    "@types/node": "^14.14.37",
+    "axios": "^0.21.1"
   }
 }
